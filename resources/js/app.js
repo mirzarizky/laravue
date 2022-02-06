@@ -2,17 +2,13 @@
 import Vue from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue";
 import { InertiaProgress } from "@inertiajs/progress";
-import route from "./mixins/route";
 
 // Plugins
 import "@/plugins/composition-api";
+import "@/plugins/ziggy";
 import vuetify from "@/plugins/vuetiify";
 
-// Mixins
-Vue.mixin(route);
-
-const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
+const appName = process.env.MIX_APP_NAME || "Laravel";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

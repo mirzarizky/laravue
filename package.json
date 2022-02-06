@@ -7,7 +7,8 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production && mix --production --mix-config=webpack.ssr.mix.js",
+        "build:ssr": "mix --production --mix-config=webpack.ssr.mix.js"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.0",
@@ -38,5 +39,10 @@
         "vuetify": "^2.6.2",
         "vuetify-loader": "^1.7.3",
         "vuetifyjs-mix-extension": "^0.0.20"
+    },
+    "dependencies": {
+        "@inertiajs/server": "^0.1.0",
+        "vue-server-renderer": "^2.6.14",
+        "webpack-node-externals": "^3.0.0"
     }
 }

@@ -1,6 +1,6 @@
 const mix = require("laravel-mix");
 require("laravel-mix-versionhash");
-require('vuetifyjs-mix-extension')
+require("vuetifyjs-mix-extension");
 
 /*
  |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ require('vuetifyjs-mix-extension')
  */
 
 mix.js("resources/js/app.js", "public/dist/js")
-    .vuetify('vuetify-loader')
+    .vuetify("vuetify-loader")
     .vue({ version: 2 })
     .postCss("resources/css/app.css", "public/dist/css", [
         require("postcss-import"),

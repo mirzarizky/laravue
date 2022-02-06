@@ -1,55 +1,73 @@
 <template>
-    <BreezeGuestLayout>
+    <GuestLayout>
         <Head title="Confirm Password" />
-        <div class="mb-4 text-sm text-gray-600">
-            This is a secure area of the application. Please confirm your
-            password before continuing.
+
+        <div class="tw-py-10">
+            <div
+                class="tw-w-full tw-max-w-md tw-px-6 tw-py-6 tw-border tw-border-gray-200 tw-mx-auto tw-bg-white tw-rounded tw-shadow-sm lg:tw-py-8"
+            >
+                <div class="tw-flex tw-flex-col tw-items-center">
+                    <Link href="/">
+                        <ApplicationLogo
+                            class="tw-w-12 tw-h-12 tw-fill-current lg:tw-w-14 lg:tw-h-14 text-primary"
+                        />
+                    </Link>
+                    <p class="tw-my-4 tw-text-center body-2">
+                        This is a secure area of the application. Please confirm
+                        your password before continuing.
+                    </p>
+                </div>
+
+                <form @submit.prevent="submit">
+                    <v-row>
+                        <v-col cols="12">
+                            <v-text-field
+                                dense
+                                :hide-details="!!!form.errors.password"
+                                id="password"
+                                label="Password"
+                                type="password"
+                                v-model="form.password"
+                                required
+                                autofocus
+                                outlined
+                                :error="!!form.errors.password"
+                                :error-messages="form.errors.password"
+                                autocomplete="current-password"
+                            />
+                        </v-col>
+
+                        <v-col cols="12" class="lg:tw-mt-2">
+                            <v-btn
+                                type="submit"
+                                color="primary"
+                                block
+                                depressed
+                                :disabled="form.processing"
+                                :loading="form.processing"
+                            >
+                                Confirm
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </form>
+            </div>
         </div>
-        <BreezeValidationErrors class="mb-4" />
-        <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput
-                    id="password"
-                    type="password"
-                    class="block w-full mt-1"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                    autofocus
-                />
-            </div>
-            <div class="flex justify-end mt-4">
-                <BreezeButton
-                    class="ml-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Confirm
-                </BreezeButton>
-            </div>
-        </form>
-    </BreezeGuestLayout>
+    </GuestLayout>
 </template>
 
 <script>
-import BreezeButton from "@/Components/Button.vue";
-import BreezeGuestLayout from "@/Layouts/Guest.vue";
-import BreezeInput from "@/Components/Input.vue";
-import BreezeLabel from "@/Components/Label.vue";
-import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
-import { Head } from "@inertiajs/inertia-vue";
+import GuestLayout from "@/Layouts/Guest.vue";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import { Head, Link } from "@inertiajs/inertia-vue";
+import { defineComponent } from "@vue/composition-api";
 
-export default {
-    // layout: BreezeGuestLayout,
-
+export default defineComponent({
     components: {
-        BreezeGuestLayout,
-        BreezeButton,
-        BreezeInput,
-        BreezeLabel,
-        BreezeValidationErrors,
+        GuestLayout,
         Head,
+        ApplicationLogo,
+        Link,
     },
 
     data() {
@@ -67,5 +85,5 @@ export default {
             });
         },
     },
-};
+});
 </script>

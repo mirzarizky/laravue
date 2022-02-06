@@ -1,94 +1,133 @@
 <template>
-    <BreezeGuestLayout>
+    <GuestLayout>
         <Head title="Register" />
-        <BreezeValidationErrors class="mb-4" />
-        <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="name" value="Name" />
-                <BreezeInput
-                    id="name"
-                    type="text"
-                    class="block w-full mt-1"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+
+        <div class="tw-py-10">
+            <div
+                class="tw-w-full tw-max-w-md tw-px-6 tw-py-6 tw-border tw-border-gray-200 tw-mx-auto tw-bg-white tw-rounded tw-shadow-sm lg:tw-py-8"
+            >
+                <div class="tw-flex tw-flex-col tw-items-center">
+                    <Link href="/">
+                        <ApplicationLogo
+                            class="tw-w-12 tw-h-12 tw-fill-current lg:tw-w-14 lg:tw-h-14 text-primary"
+                        />
+                    </Link>
+                    <h1 class="tw-mb-4 tw-text-center headline">Register</h1>
+                </div>
+
+                <form @submit.prevent="submit">
+                    <v-row>
+                        <v-col cols="12">
+                            <v-text-field
+                                :hide-details="!!!form.errors.name"
+                                id="name"
+                                label="Name"
+                                type="text"
+                                v-model="form.name"
+                                required
+                                autofocus
+                                outlined
+                                dense
+                                :error="!!form.errors.name"
+                                :error-messages="form.errors.name"
+                                autocomplete="name"
+                            />
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field
+                                :hide-details="!!!form.errors.email"
+                                id="email"
+                                label="Email"
+                                type="email"
+                                v-model="form.email"
+                                required
+                                outlined
+                                dense
+                                :error="!!form.errors.email"
+                                :error-messages="form.errors.email"
+                                autocomplete="username"
+                            />
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field
+                                dense
+                                :hide-details="!!!form.errors.password"
+                                id="password"
+                                label="Password"
+                                type="password"
+                                v-model="form.password"
+                                required
+                                outlined
+                                :error="!!form.errors.password"
+                                :error-messages="form.errors.password"
+                                autocomplete="current-password"
+                            />
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field
+                                dense
+                                :hide-details="
+                                    !!!form.errors.password_confirmation
+                                "
+                                id="password_confirmation"
+                                label="Confirm Password"
+                                type="password"
+                                v-model="form.password_confirmation"
+                                required
+                                outlined
+                                :error="!!form.errors.password_confirmation"
+                                :error-messages="
+                                    form.errors.password_confirmation
+                                "
+                                autocomplete="current-password"
+                            />
+                        </v-col>
+                        <v-col cols="12">
+                            <p class="tw-text-sm tw-text-gray-500">
+                                By signing up, you agree to the
+                                <a href="#">Term of Service</a> and
+                                <a href="a">Privacy Policy</a>.
+                            </p>
+                        </v-col>
+
+                        <v-col cols="12" class="lg:tw-mt-2">
+                            <div
+                                class="tw-flex tw-items-center tw-justify-between"
+                            >
+                                <Link :href="route('login')" class="body-2">
+                                    Already registered?</Link
+                                >
+                                <v-btn
+                                    type="submit"
+                                    color="primary"
+                                    depressed
+                                    class="px-5"
+                                    :disabled="form.processing"
+                                    :loading="form.processing"
+                                >
+                                    Register
+                                </v-btn>
+                            </div>
+                        </v-col>
+                    </v-row>
+                </form>
             </div>
-            <div class="mt-4">
-                <BreezeLabel for="email" value="Email" />
-                <BreezeInput
-                    id="email"
-                    type="email"
-                    class="block w-full mt-1"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-            </div>
-            <div class="mt-4">
-                <BreezeLabel for="password" value="Password" />
-                <BreezeInput
-                    id="password"
-                    type="password"
-                    class="block w-full mt-1"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-            </div>
-            <div class="mt-4">
-                <BreezeLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-                <BreezeInput
-                    id="password_confirmation"
-                    type="password"
-                    class="block w-full mt-1"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-            </div>
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="text-sm text-gray-600 underline hover:text-gray-900"
-                >
-                    Already registered?
-                </Link>
-                <BreezeButton
-                    class="ml-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Register
-                </BreezeButton>
-            </div>
-        </form>
-    </BreezeGuestLayout>
+        </div>
+    </GuestLayout>
 </template>
 
 <script>
-import BreezeButton from "@/Components/Button.vue";
-import BreezeGuestLayout from "@/Layouts/Guest.vue";
-import BreezeInput from "@/Components/Input.vue";
-import BreezeLabel from "@/Components/Label.vue";
-import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
+import GuestLayout from "@/Layouts/Guest.vue";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import { Head, Link } from "@inertiajs/inertia-vue";
+import { defineComponent } from "@vue/composition-api";
 
-export default {
-    // layout: BreezeGuestLayout
-
+export default defineComponent({
     components: {
-        BreezeButton,
-        BreezeInput,
-        BreezeLabel,
-        BreezeValidationErrors,
         Head,
         Link,
-        BreezeGuestLayout,
+        GuestLayout,
+        ApplicationLogo,
     },
 
     data() {
@@ -111,5 +150,5 @@ export default {
             });
         },
     },
-};
+});
 </script>

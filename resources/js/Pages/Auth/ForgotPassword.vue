@@ -16,7 +16,7 @@
                     <h1 class="tw-mb-4 tw-text-center headline">
                         Reset Password
                     </h1>
-                    <p class="caption">
+                    <p class="body-2">
                         Forgot your password? No problem. Just let us know your
                         email address and we will email you a password reset
                         link that will allow you to choose a new one.
@@ -32,6 +32,7 @@
                                 type="email"
                                 v-model="form.email"
                                 required
+                                placeholder="Your email"
                                 autofocus
                                 outlined
                                 dense

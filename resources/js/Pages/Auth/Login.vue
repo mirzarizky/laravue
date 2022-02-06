@@ -18,7 +18,7 @@
                             class="tw-w-12 tw-h-12 tw-fill-current lg:tw-w-14 lg:tw-h-14 text-primary"
                         />
                     </Link>
-                    <h1 class="tw-mb-4 tw-text-center headline">Login</h1>
+                    <h1 class="tw-my-4 tw-text-center headline">Login</h1>
                 </div>
                 <form @submit.prevent="login">
                     <v-row>

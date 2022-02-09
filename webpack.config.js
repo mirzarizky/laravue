@@ -22,4 +22,7 @@ module.exports = {
         // new VuetifyLoaderPlugin(),
         new caseSensitivePathsPlugin(),
     ],
+    output: {
+        chunkFilename: "dist/js/[name].js?id=[chunkhash]",
+    },
 };

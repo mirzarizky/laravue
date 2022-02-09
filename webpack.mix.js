@@ -21,7 +21,8 @@ mix.js("resources/js/app.js", "public/dist/js")
         require("tailwindcss"),
         require("autoprefixer"),
     ])
-    .webpackConfig(require("./webpack.config"));
+    .webpackConfig(require("./webpack.config"))
+    .disableSuccessNotifications();
 
 if (mix.inProduction()) {
     mix.versionHash();

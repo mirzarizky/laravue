@@ -12,7 +12,7 @@ const appName = process.env.MIX_APP_NAME || "Laravel";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => require(`./Pages/${name}`),
+    resolve: (name) => import(`./Pages/${name}`),
     setup({ el, App, props, plugin }) {
         Vue.use(plugin);
 
@@ -23,4 +23,4 @@ createInertiaApp({
     },
 });
 
-InertiaProgress.init({ color: "#4B5563" });
+InertiaProgress.init({ color: "#3B82F6" });

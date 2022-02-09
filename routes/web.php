@@ -22,4 +22,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/about', function () {
+    return Inertia::render('About');
+})->middleware(['auth', 'verified'])->name('about');
+
+Route::get('logout', fn () => Auth::logout());
 require __DIR__.'/auth.php';

@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-main class="tw-bg-gray-50">
+        <v-main color="grey lighten-5">
             <v-container>
                 <slot />
             </v-container>

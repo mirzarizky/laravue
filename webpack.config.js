@@ -14,6 +14,7 @@ module.exports = {
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: [
                 "dist/*",
+                "!dist/.gitignore",
                 "!index.php",
                 "!robots.txt",
                 "!favicon.ico",

@@ -20,7 +20,7 @@
         "@vue/runtime-dom": "^3.2.31",
         "@vueuse/core": "^7.6.0",
         "autoprefixer": "^10.2.4",
-        "axios": "^0.25.0",
+        "axios": "^0.26.0",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "clean-webpack-plugin": "^4.0.0",
         "css-loader": "^6.6.0",

@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -67,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -123,6 +125,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'https' => env('REDIRECT_HTTPS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -173,7 +177,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        App\Providers\EloquentServiceProvider::class,
+        App\Providers\LaravelHealthServiceProvider::class,
 
     ],
 

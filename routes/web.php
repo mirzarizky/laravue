@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SkinSightController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,8 @@ use Inertia\Inertia;
 */
 
 Route::view('/', 'welcome');
+
+Route::get('skinsight', [SkinSightController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

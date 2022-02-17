@@ -3,7 +3,13 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["resources/js/*"]
-        }
+        },
+        "types": [
+            "unplugin-vue2-script-setup/types"
+        ]
+    },
+    "vueCompilerOptions": {
+        "experimentalCompatMode": 2
     },
     "exclude": ["node_modules", "public"]
 }

@@ -34,14 +34,6 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-    components: {
-        //
-    },
-
-    setup() {
-        //
-    },
-
     data() {
         return {
             links: [
@@ -53,7 +45,6 @@ export default defineComponent({
                         name: "dashboard",
                     },
                 },
-
                 {
                     title: "About",
                     icon: "mdi-help-box",
@@ -64,10 +55,6 @@ export default defineComponent({
                 },
             ],
         };
-    },
-
-    computed: {
-        //
     },
 });
 </script>

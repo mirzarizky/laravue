@@ -17,3 +17,8 @@ yarn-error.log
 
 # mix output
 public/mix-manifest.json
+
+# IDE Helper
+_ide_helper.php
+.phpstorm.meta.php
+_ide_helper_models.php

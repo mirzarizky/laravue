@@ -1,6 +1,7 @@
 const path = require("path");
 const mix = require("laravel-mix");
 const webpackNodeExternals = require("webpack-node-externals");
+const ScriptSetup = require("unplugin-vue2-script-setup/webpack").default;
 require("vuetifyjs-mix-extension");
 
 mix.options({ manifest: false })
@@ -18,4 +19,7 @@ mix.options({ manifest: false })
                 allowlist: [/^vuetify/],
             }),
         ],
+        plugins: [
+            ScriptSetup({}),
+        ]
     });

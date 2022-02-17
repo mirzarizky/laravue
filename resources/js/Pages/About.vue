@@ -1,16 +1,13 @@
 <template>
     <AuthLayout title="About">
-        <p>yeah this is about page</p>
+        <v-card outlined>
+            <v-card-text>
+                <p>yeah this is about page</p>
+            </v-card-text>
+        </v-card>
     </AuthLayout>
 </template>
 
-<script>
+<script setup>
 import AuthLayout from "@/Layouts/Authenticated.vue";
-import { defineComponent } from "@vue/composition-api";
-
-export default defineComponent({
-    components: {
-        AuthLayout,
-    },
-});
 </script>

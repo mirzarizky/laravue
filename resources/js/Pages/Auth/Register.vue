@@ -2,10 +2,8 @@
     <GuestLayout>
         <Head title="Register" />
 
-        <div class="tw-py-10">
-            <div
-                class="tw-w-full tw-max-w-md tw-px-6 tw-py-6 tw-border tw-border-gray-200 tw-mx-auto tw-bg-white tw-rounded tw-shadow-sm lg:tw-py-8"
-            >
+        <div class="tw-w-full tw-max-w-md tw-mx-auto">
+            <v-card outlined flat class="tw-px-6 tw-py-6 lg:tw-py-8">
                 <div class="tw-flex tw-flex-col tw-items-center">
                     <Link href="/">
                         <ApplicationLogo
@@ -89,7 +87,6 @@
                                 <a href="a">Privacy Policy</a>.
                             </p>
                         </v-col>
-
                         <v-col cols="12" class="lg:tw-mt-2">
                             <div
                                 class="tw-flex tw-items-center tw-justify-between"
@@ -111,7 +108,7 @@
                         </v-col>
                     </v-row>
                 </form>
-            </div>
+            </v-card>
         </div>
     </GuestLayout>
 </template>

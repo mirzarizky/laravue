@@ -391,6 +391,5 @@ export default defineComponent({
         laravelVersion: String,
         phpVersion: String,
     },
-    methods,
 });
 </script>

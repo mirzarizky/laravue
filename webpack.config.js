@@ -2,6 +2,7 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const { VuetifyLoaderPlugin } = require("vuetify-loader");
 const caseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const ScriptSetup = require("unplugin-vue2-script-setup/webpack").default;
 
 module.exports = {
     resolve: {
@@ -22,6 +23,7 @@ module.exports = {
         }),
         // new VuetifyLoaderPlugin(),
         new caseSensitivePathsPlugin(),
+        ScriptSetup({}),
     ],
     output: {
         chunkFilename: "dist/js/[name].js?id=[chunkhash]",

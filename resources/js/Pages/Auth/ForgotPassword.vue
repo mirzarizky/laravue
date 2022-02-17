@@ -2,16 +2,14 @@
     <GuestLayout>
         <Head title="Forgot Password" />
 
-        <div class="tw-pt-10">
-            <div class="tw-w-full tw-max-w-md tw-mx-auto" v-if="status">
-                <v-alert type="success" outlined text>
-                    {{ status }}
-                </v-alert>
-            </div>
+        <div class="tw-w-full tw-max-w-md tw-mx-auto" v-if="status">
+            <v-alert type="success" outlined text>
+                {{ status }}
+            </v-alert>
+        </div>
 
-            <div
-                class="tw-w-full tw-max-w-md tw-px-6 tw-py-6 tw-border tw-border-gray-100 tw-mx-auto tw-bg-white tw-rounded tw-shadow-sm lg:tw-py-8"
-            >
+        <div class="tw-w-full tw-max-w-md tw-mx-auto">
+            <v-card flat outlined class="tw-p-6 lg:tw-py-8">
                 <div class="tw-flex tw-flex-col tw-items-center">
                     <h1 class="tw-mb-4 tw-text-center headline">
                         Reset Password
@@ -22,6 +20,7 @@
                         link that will allow you to choose a new one.
                     </p>
                 </div>
+
                 <form @submit.prevent="submit">
                     <v-row>
                         <v-col cols="12">
@@ -55,7 +54,7 @@
                         </v-col>
                     </v-row>
                 </form>
-            </div>
+            </v-card>
         </div>
     </GuestLayout>
 </template>

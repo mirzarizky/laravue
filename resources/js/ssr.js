@@ -1,12 +1,13 @@
 import Vue from "vue";
-import { createRenderer } from "vue-server-renderer";
-import { createInertiaApp } from "@inertiajs/inertia-vue";
-import createServer from "@inertiajs/server";
 
 // Plugins
 import "@/plugins/composition-api";
 import "@/plugins/ziggy";
 import vuetify from "@/plugins/vuetiify";
+
+import { createRenderer } from "vue-server-renderer";
+import { createInertiaApp } from "@inertiajs/inertia-vue";
+import createServer from "@inertiajs/server";
 
 createServer((page) =>
     createInertiaApp({

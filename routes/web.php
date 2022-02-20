@@ -19,7 +19,10 @@ use Inertia\Inertia;
 
 Route::view('/', 'welcome');
 
-Route::get('skinsight', [SkinSightController::class, 'index']);
+Route::controller(SkinSightController::class)->group(function () {
+    Route::get('skinsight', 'index');
+    Route::post('skinsight', 'store');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

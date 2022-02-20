@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\GetSkinSightQuiz;
+use App\Http\Requests\SkinSightRequest;
 use App\Http\Resources\SkinsightQuizResource;
-use App\Models\Question;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class SkinSightController extends Controller
 {
     public function index()
     {
-        $questions = Cache::remember(
-            'skinsight-quiz',
-            now()->addHour(),
-            function () {
-                return Question::query()
-                    ->with(['options:id,question_id,option_text'])
-                    ->get();
-            }
-        );
+        return Inertia::render('Skinsight', [
+            'quizzes' =>  Inertia::lazy(
+                fn () => SkinsightQuizResource::collection(GetSkinSightQuiz::make()->handle())
+            )
+        ]);
+    }
 
-        return response()
-            ->json(SkinsightQuizResource::collection($questions));
+    public function store(SkinSightRequest $request)
+    {
+        dd($request->all());
     }
 }

@@ -19,7 +19,5 @@ mix.options({ manifest: false })
                 allowlist: [/^vuetify/],
             }),
         ],
-        plugins: [
-            ScriptSetup({}),
-        ]
+        plugins: [ScriptSetup({})],
     });

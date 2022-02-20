@@ -312,7 +312,7 @@
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="css">
 .bg-gray-100 {
     background-color: #f7fafc;
     background-color: rgba(247, 250, 252, var(--tw-bg-opacity));

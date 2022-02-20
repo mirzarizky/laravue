@@ -26,6 +26,7 @@
         "victord11/ssl-certification-health-check": "^1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/telescope": "^4.7",

@@ -31,6 +31,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    public const CACHE_KEY_QUIZ = 'skinsight-quiz';
+
     protected $table = 'questions';
 
     protected $fillable = [

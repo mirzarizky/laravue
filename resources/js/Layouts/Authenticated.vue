@@ -1,32 +1,54 @@
-<script setup>
+<script>
 import { useBreakpoints } from "@vueuse/core";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Sidebar from "@/Layouts/Sidebar.vue";
 import { Link, Head } from "@inertiajs/inertia-vue";
-import { ref, onMounted } from "@vue/composition-api";
+import { ref, onMounted, defineComponent } from "@vue/composition-api";
+import { useSnackbar } from "@/stores/snackbar";
 
-defineProps({
-    noFooter: {
-        type: Boolean,
-        default: false,
+export default defineComponent({
+    props: {
+        noFooter: {
+            type: Boolean,
+            default: false,
+        },
+        title: {
+            type: String,
+            default: "Untitled",
+        },
     },
-    title: {
-        type: String,
-        default: "Untitled",
-    },
-});
 
-const breakpoints = useBreakpoints({
-    xs: 600,
-    sm: 960,
-    md: 1264,
-    lg: 1904,
-    xl: 1905,
-});
-const showNavigationDrawer = ref(false);
-const mdAndLarger = breakpoints.isGreater("md");
-onMounted(() => {
-    if (mdAndLarger) showNavigationDrawer.value = true;
+    components: {
+        ApplicationLogo,
+        Sidebar,
+        Link,
+        Head,
+    },
+
+    setup() {
+        const breakpoints = useBreakpoints({
+            xs: 600,
+            sm: 960,
+            md: 1264,
+            lg: 1904,
+            xl: 1905,
+        });
+        const snackbar = useSnackbar();
+
+        const showNavigationDrawer = ref(false);
+        const mdAndLarger = breakpoints.isGreater("md");
+        onMounted(() => {
+            if (mdAndLarger) showNavigationDrawer.value = true;
+        });
+
+        return { showNavigationDrawer, snackbar };
+    },
+
+    computed: {
+        userAlias() {
+            return this.$page.props.auth?.user.name.charAt(0) ?? "";
+        },
+    },
 });
 </script>
 
@@ -36,7 +58,7 @@ onMounted(() => {
 
         <v-navigation-drawer
             v-model="showNavigationDrawer"
-            color="blue lighten-5"
+            color="brown lighten-5"
             floating
             app
             :width="288"
@@ -45,7 +67,7 @@ onMounted(() => {
             <Sidebar />
         </v-navigation-drawer>
 
-        <v-app-bar app :elevation="0" color="blue lighten-5">
+        <v-app-bar app :elevation="0" color="brown lighten-5">
             <v-app-bar-nav-icon
                 @click.stop="showNavigationDrawer = !showNavigationDrawer"
             />
@@ -69,7 +91,9 @@ onMounted(() => {
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn text v-bind="attrs" v-on="on" icon>
                             <v-avatar color="primary" size="40">
-                                <span class="white--text body-1">CJ</span>
+                                <span class="white--text body-1">
+                                    {{ userAlias }}
+                                </span>
                             </v-avatar>
                         </v-btn>
                     </template>
@@ -90,16 +114,21 @@ onMounted(() => {
             </div>
         </v-app-bar>
 
-        <v-main class="tw-h-full tw-min-h-screen blue lighten-5">
-            <div class="blue lighten-5">
+        <v-main class="tw-h-full tw-min-h-screen brown lighten-5">
+            <div class="brown lighten-5">
                 <v-container fluid>
                     <h1 class="tw-text-xl tw-font-medium">{{ title }}</h1>
                 </v-container>
                 <v-divider class="mt-2 mb-3" />
             </div>
-            <v-container class="py-4 blue lighten-5">
+
+            <v-container class="py-4 brown lighten-5">
                 <slot />
             </v-container>
+
+            <v-snackbar v-model="snackbar.isShow" :color="snackbar.color">
+                {{ snackbar.text }}
+            </v-snackbar>
         </v-main>
         <!-- <v-footer app absolute v-if="!noFooter">Jiah</v-footer> -->
     </v-app>

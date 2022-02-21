@@ -3,7 +3,8 @@ import Vue from "vue";
 // Plugins
 import "@/plugins/composition-api";
 import "@/plugins/ziggy";
-import vuetify from "@/plugins/vuetiify";
+import vuetify from "@/plugins/vuetify";
+import pinia from "@/plugins/pinia";
 
 import { createRenderer } from "vue-server-renderer";
 import { createInertiaApp } from "@inertiajs/inertia-vue";
@@ -18,6 +19,7 @@ createServer((page) =>
             Vue.use(plugin);
             return new Vue({
                 vuetify,
+                pinia,
                 render: (h) => h(app, props),
             });
         },

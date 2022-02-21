@@ -6,7 +6,9 @@ import { InertiaProgress } from "@inertiajs/progress";
 // Plugins
 import "@/plugins/composition-api";
 import "@/plugins/ziggy";
-import vuetify from "@/plugins/vuetiify";
+import "@/plugins/axios";
+import vuetify from "@/plugins/vuetify";
+import pinia from "@/plugins/pinia";
 
 const appName = process.env.MIX_APP_NAME || "Laravel";
 
@@ -18,6 +20,7 @@ createInertiaApp({
 
         new Vue({
             vuetify,
+            pinia,
             render: (h) => h(App, props),
         }).$mount(el);
     },

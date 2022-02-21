@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * App\Models\Question
@@ -26,12 +29,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestionText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
  */
-class Question extends Model
+class Question extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
     public const CACHE_KEY_QUIZ = 'skinsight-quiz';
+    public const QUESTION_IMAGE_COLLECTION_KEY = 'question_image';
 
     protected $table = 'questions';
 
@@ -43,6 +50,12 @@ class Question extends Model
     protected $casts = [
         'group_id' => 'integer',
     ];
+
+    public function questionImage()
+    {
+        return $this->morphOne(Media::class, 'model')
+            ->where('collection_name', self::QUESTION_IMAGE_COLLECTION_KEY)->latest('id');
+    }
 
     public function group()
     {

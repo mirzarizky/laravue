@@ -11,9 +11,9 @@
 
         <v-list dense nav shaped class="pl-0">
             <v-list-item
-                active-class="tw-bg-blue-100 primary--text"
+                active-class="brown lighten-4 brown--text text--darken-1"
                 class="pl-3 tw-font-medium"
-                v-for="link in links"
+                v-for="link in generalLinks"
                 :key="link.title"
                 :href="link.href"
                 :input-value="route().current(link.route.name)"
@@ -27,6 +27,33 @@
                 </v-list-item-content>
             </v-list-item>
         </v-list>
+
+        <v-divider />
+
+        <v-list-group active-class="black--text" :value="true" :ripple="false">
+            <template v-slot:activator>
+                <v-list-item-title class="text--body">Master</v-list-item-title>
+            </template>
+
+            <v-list dense nav shaped class="pl-0">
+                <v-list-item
+                    active-class="brown lighten-4 brown--text text--darken-1"
+                    class="pl-3 tw-font-medium"
+                    v-for="link in quizLinks"
+                    :key="link.title"
+                    :href="link.href"
+                    :input-value="route().current(link.route.name)"
+                    @click.prevent="$inertia.visit(link.href)"
+                >
+                    <v-list-item-icon>
+                        <v-icon v-text="link.icon" />
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ link.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-list-group>
     </div>
 </template>
 
@@ -36,13 +63,31 @@ import { defineComponent } from "@vue/composition-api";
 export default defineComponent({
     data() {
         return {
-            links: [
+            generalLinks: [
                 {
                     title: "Home",
                     icon: "mdi-home",
                     href: this.route("dashboard"),
                     route: {
                         name: "dashboard",
+                    },
+                },
+                {
+                    title: "About",
+                    icon: "mdi-help-box",
+                    href: this.route("about"),
+                    route: {
+                        name: "about",
+                    },
+                },
+            ],
+            quizLinks: [
+                {
+                    title: "Skin Test",
+                    icon: "mdi-clipboard-text",
+                    href: this.route("admin.quiz.index"),
+                    route: {
+                        name: "admin.quiz.*",
                     },
                 },
                 {

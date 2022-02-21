@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\DeleteQuestionImageController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SkinSightController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,6 +17,8 @@ use Inertia\Inertia;
 |
 */
 
+require __DIR__.'/auth.php';
+
 Route::view('/', 'welcome');
 
 Route::controller(SkinSightController::class)->group(function () {
@@ -30,7 +32,16 @@ Route::get('/dashboard', function () {
 
 Route::get('/about', function () {
     return Inertia::render('About');
-})->middleware(['auth', 'verified'])->name('about');
+})->middleware(['auth'])->name('about');
 
-Route::get('logout', fn () => Auth::logout());
-require __DIR__.'/auth.php';
+
+Route::middleware(['auth', 'role:admin|superadmin'])
+    ->name('admin.')
+    ->group(function () {
+        Route::controller(QuizController::class)->group(function () {
+            Route::get('quiz', 'index')->name('quiz.index');
+            Route::get('quiz/{question}', 'edit')->name('quiz.edit');
+            Route::put('quiz/{question}', 'update')->name('quiz.update');
+        });
+        Route::post('quiz/{question}', DeleteQuestionImageController::class)->name('quiz.delete_image');
+    });

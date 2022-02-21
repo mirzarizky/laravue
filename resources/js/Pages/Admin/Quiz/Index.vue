@@ -8,20 +8,14 @@ export default defineComponent({
     },
 
     props: {
-        quizzes: Array,
-    },
-
-    data() {
-        return {
-            //
-        };
+        quizzes: Object,
     },
 });
 </script>
 <template>
     <AuthenticatedLayout title="Quiz">
         <div class="tw-space-y-6">
-            <div v-for="(group, i) in quizzes" :key="group.id">
+            <div v-for="(group, i) in quizzes.data" :key="group.id">
                 <h2 class="mb-2 title">{{ group.name }}</h2>
                 <div v-for="quiz in group.questions" :key="quiz.id">
                     <v-expansion-panels accordion multiple popout>
@@ -30,6 +24,12 @@ export default defineComponent({
                                 {{ quiz.question_text }}
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
+                                <v-img
+                                    v-if="quiz.question_image_url"
+                                    contain
+                                    max-height="128"
+                                    :src="quiz.question_image_url"
+                                />
                                 <v-radio-group>
                                     <v-radio
                                         v-for="option in quiz.options"

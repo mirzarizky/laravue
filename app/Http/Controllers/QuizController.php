@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateQuizRequest;
+use App\Http\Resources\QuestionGroupResource;
 use App\Http\Resources\QuestionResource;
 use App\Models\Question;
 use App\Models\QuestionGroup;
@@ -15,11 +16,11 @@ class QuizController extends Controller
     public function index()
     {
         $quizzes = QuestionGroup::query()
-            ->with(['questions', 'questions.options:id,question_id,option_text'])
+            ->with(['questions', 'questions.questionImage', 'questions.options:id,question_id,option_text'])
             ->get();
-
+        // dd(QuestionGroupResource::collection($quizzes));
         return Inertia::render('Admin/Quiz/Index', [
-            'quizzes' => $quizzes
+            'quizzes' => QuestionGroupResource::collection($quizzes)
         ]);
     }
 

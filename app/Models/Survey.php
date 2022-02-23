@@ -74,13 +74,12 @@ class Survey extends Model
         'birth_date' => 'date',
     ];
 
-    public function user()
+    public static function getUUidColumn(): string
     {
-        return $this
-            ->belongsTo(User::class, 'user_id')
-            ->withDefault();
+        return 'uuid';
     }
 
+    // Attributes
     public function getPhotoUrlAttribute()
     {
         if (!$this->photo) {
@@ -99,6 +98,14 @@ class Survey extends Model
         return config('app.frontend_url') . '/formula' . '/' . $this->uuid;
     }
 
+    // Relationships
+    public function user()
+    {
+        return $this
+            ->belongsTo(User::class, 'user_id')
+            ->withDefault();
+    }
+
     public function answers()
     {
         return $this->hasMany(Answer::class, 'survey_id');
@@ -112,10 +119,5 @@ class Survey extends Model
     public function skinType()
     {
         return $this->belongsTo(SkinType::class, 'result', 'name');
-    }
-
-    public static function getUUidColumn(): string
-    {
-        return 'uuid';
     }
 }

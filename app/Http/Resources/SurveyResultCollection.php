@@ -17,9 +17,9 @@ class SurveyResultCollection extends JsonResource
         return [
             'uuid'       => $this->uuid,
             'result'     => $this->result,
-            'photo_url' => $this->photo_url,
+            'photo_url'  => $this->photo_url,
             'user'       => UserResource::make($this->whenLoaded('user')),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

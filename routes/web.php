@@ -3,6 +3,7 @@
 use App\Http\Controllers\DeleteQuestionImageController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SkinSightController;
+use App\Http\Controllers\SurveyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -38,6 +39,13 @@ Route::get('/about', function () {
 Route::middleware(['auth', 'role:admin|superadmin'])
     ->name('admin.')
     ->group(function () {
+
+        // survey result
+        Route::controller(SurveyController::class)->group(function () {
+            Route::get('survey', 'index')->name('survey.index');
+        });
+
+        // quiz / question
         Route::controller(QuizController::class)->group(function () {
             Route::get('quiz', 'index')->name('quiz.index');
             Route::get('quiz/{question}', 'edit')->name('quiz.edit');

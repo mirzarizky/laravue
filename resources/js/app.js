@@ -7,6 +7,7 @@ import { InertiaProgress } from "@inertiajs/progress";
 import "@/plugins/composition-api";
 import "@/plugins/ziggy";
 import "@/plugins/axios";
+import "@/plugins/dayjs";
 import vuetify from "@/plugins/vuetify";
 import pinia from "@/plugins/pinia";
 

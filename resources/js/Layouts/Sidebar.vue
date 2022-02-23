@@ -80,6 +80,14 @@ export default defineComponent({
                         name: "about",
                     },
                 },
+                {
+                    title: "SkinSight Result",
+                    icon: "mdi-help-box",
+                    href: this.route("admin.survey.index"),
+                    route: {
+                        name: "admin.survey.index",
+                    },
+                },
             ],
             quizLinks: [
                 {
@@ -88,14 +96,6 @@ export default defineComponent({
                     href: this.route("admin.quiz.index"),
                     route: {
                         name: "admin.quiz.*",
-                    },
-                },
-                {
-                    title: "About",
-                    icon: "mdi-help-box",
-                    href: this.route("about"),
-                    route: {
-                        name: "about",
                     },
                 },
             ],

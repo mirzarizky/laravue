@@ -24,6 +24,7 @@
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "clean-webpack-plugin": "^4.0.0",
         "css-loader": "^6.6.0",
+        "dayjs": "^1.10.7",
         "deepmerge": "^4.2.2",
         "fibers": "^5.0.1",
         "laravel-mix": "^6.0.6",

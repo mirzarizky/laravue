@@ -19,23 +19,17 @@ class SurveyController extends Controller
         if (($perPage = $request->query('perPage', 10)) > 50) {
             $perPage = 10;
         }
-        $search = $request->query('s');
 
-        $query = Survey::query()
-            ->with(['user'])
-            ->when(
-                $search,
-                fn ($query, $search) =>  $query->search(['user.name', 'user.email'], $search)
-            );
+        $query = Survey::query()->with(['user']);
 
         $surveys = QueryBuilder::for($query)
             ->allowedFilters([
-                AllowedFilter::custom('created_at', new DateFilter())
+                AllowedFilter::custom('created_at', new DateFilter())->default('1d')
             ])
             ->allowedSorts([
                 'created_at',
                 'result',
-                AllowedSort::custom('user', new UserNameSort(), 'user_name')
+                AllowedSort::custom('user_name', new UserNameSort())
             ])
             ->defaultSort('-created_at')
             ->paginate($perPage)
@@ -44,8 +38,8 @@ class SurveyController extends Controller
         $collections = SurveyResultCollection::collection($surveys);
 
         return Inertia::render('Admin/Survey/Index', [
-            'surveys' => $collections,
-            'query'   => $request->only(['s', 'perPage', 'sort'])
+            'surveys' => fn () => $collections,
+            'query'   => fn () => $request->only([ 'perPage', 'sort', 'filter'])
         ]);
     }
 }

@@ -1,6 +1,8 @@
 <script>
 import { defineComponent } from "@vue/composition-api";
 import AuthLayout from "@/Layouts/Authenticated.vue";
+import pickBy from "lodash/pickBy";
+import head from "lodash/head";
 
 export default defineComponent({
     components: {
@@ -43,6 +45,7 @@ export default defineComponent({
                 date_filter: false,
             },
             filter: {
+                ...this.query.filter,
                 date_filter: "1d",
                 from_date: null,
                 to_date: null,
@@ -50,7 +53,102 @@ export default defineComponent({
         };
     },
 
-    methods: {},
+    mounted() {
+        const dateFilter = this.query?.filter?.created_at;
+        if (dateFilter) {
+            switch (dateFilter) {
+                case "1d":
+                case "7d":
+                case "30d":
+                    this.filter.date_filter = dateFilter;
+                    break;
+                default:
+                    // const [from, to] = dateFilter.split(",");
+                    this.filter.date_filter = "custom";
+                    // this.filter.from_date = from;
+                    // this.filter.to_date = to;
+                    break;
+            }
+        }
+    },
+
+    computed: {
+        sortBy() {
+            const sortBy = head(this.options.sortBy);
+            const sortDesc = head(this.options.sortDesc);
+            if (!sortBy) {
+                return null;
+            }
+
+            return `${sortDesc ? "-" : ""}${sortBy}`;
+        },
+        dateFilterOptions() {
+            return [
+                {
+                    text: `Today (${this.$date().format("D MMM YYYY")})`,
+                    value: "1d",
+                },
+                { text: "Last 7 days", value: "7d" },
+                { text: "Last 30 days", value: "30d" },
+                // { text: "Custom", value: "custom" },
+            ];
+        },
+        selectedFilterDate() {
+            if (this.filter.date_filter === "custom") {
+                return { text: "Custom", value: "custom" };
+            }
+
+            return this.dateFilterOptions.find(
+                (option) => option.value === this.filter.date_filter
+            );
+        },
+        dateFilter() {
+            if (this.filter.date_filter === "custom") {
+                return `${this.filter.from_date},${this.filter.to_date}`;
+            } else {
+                return this.filter.date_filter;
+            }
+        },
+    },
+
+    watch: {
+        sortBy() {
+            this.applyFilter();
+        },
+        "options.page"() {
+            this.applyFilter();
+        },
+        "options.itemsPerPage"() {
+            this.applyFilter();
+        },
+    },
+
+    methods: {
+        applyFilter() {
+            this.hideAllDialogs();
+            this.$inertia.visit(
+                this.route("admin.survey.index", {
+                    _query: pickBy({
+                        sort: this.sortBy,
+                        page: this.options.page,
+                        perPage: this.options.itemsPerPage,
+                        "filter[created_at]": this.dateFilter,
+                    }),
+                }),
+                {
+                    only: ["surveys", "query"],
+                    preserveState: true,
+                    onBefore: () => (this.isLoading = true),
+                    onFinish: () => (this.isLoading = false),
+                }
+            );
+        },
+        hideAllDialogs() {
+            Object.keys(this.dialogs).forEach(
+                (dialogKey) => (this.dialogs[dialogKey] = false)
+            );
+        },
+    },
 });
 </script>
 
@@ -64,13 +162,15 @@ export default defineComponent({
                     @click="dialogs.date_filter = true"
                     depressed
                 >
-                    <span class="tw-normal-case">Tanggal: Last 7 days</span>
+                    <span class="tw-normal-case">
+                        Date: {{ selectedFilterDate.text }}
+                    </span>
                     <v-icon small class="ml-2">mdi-pencil-outline</v-icon>
                 </v-btn>
-                <v-btn outlined class="white" small color="accent" depressed>
+                <!-- <v-btn outlined class="white" small color="accent" depressed>
                     <span>Add Filter</span>
                     <v-icon small class="ml-2">mdi-plus</v-icon>
-                </v-btn>
+                </v-btn> -->
             </div>
             <v-card outline>
                 <v-data-table
@@ -108,21 +208,20 @@ export default defineComponent({
 
         <v-dialog max-width="500" v-model="dialogs.date_filter">
             <v-card flat>
-                <v-card-title class="text-h5 grey lighten-2">
-                    Filter Date
-                </v-card-title>
+                <form @submit.prevent="applyFilter">
+                    <v-card-title class="text-h5 grey lighten-2">
+                        Filter Date
+                    </v-card-title>
 
-                <v-card-text>
-                    <form>
-                        <v-radio-group v-model="filter.date_filter">
+                    <v-card-text>
+                        <v-radio-group v-model="filter.date_filter" required>
                             <v-radio
-                                :label="`Today (${$date().format(
-                                    'D MMM YYYY'
-                                )})`"
-                                value="1d"
+                                :key="`radio-key-${i}`"
+                                v-for="(radioOption, i) in dateFilterOptions"
+                                :label="radioOption.text"
+                                :value="radioOption.value"
                             />
-                            <v-radio label="Last 7 days" value="7d" />
-                            <v-radio label="Last 30 days" value="30d" />
+
                             <v-radio value="custom" class="tw-flex align-start">
                                 <template v-slot:label>
                                     <v-row>
@@ -161,6 +260,7 @@ export default defineComponent({
                                                 <v-date-picker
                                                     no-title
                                                     v-model="filter.from_date"
+                                                    :max="$date().toISOString()"
                                                     @input="
                                                         menu.from_date = false
                                                     "
@@ -209,29 +309,21 @@ export default defineComponent({
                                 </template>
                             </v-radio>
                         </v-radio-group>
-                    </form>
-                </v-card-text>
+                    </v-card-text>
 
-                <v-divider />
+                    <v-divider />
 
-                <v-card-actions>
-                    <v-spacer />
-                    <v-btn
-                        text
-                        color="primary"
-                        @click="dialogs.date_filter = false"
-                    >
-                        Cancel
-                    </v-btn>
+                    <v-card-actions>
+                        <v-spacer />
+                        <v-btn text color="primary" @click="hideAllDialogs">
+                            Cancel
+                        </v-btn>
 
-                    <v-btn
-                        depressed
-                        color="primary"
-                        @click="dialogs.date_filter = false"
-                    >
-                        Apply Filter
-                    </v-btn>
-                </v-card-actions>
+                        <v-btn depressed color="primary" type="submit">
+                            Apply Filter
+                        </v-btn>
+                    </v-card-actions>
+                </form>
             </v-card>
         </v-dialog>
     </AuthLayout>

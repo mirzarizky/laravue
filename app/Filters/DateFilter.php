@@ -42,14 +42,30 @@ class DateFilter implements Filter
     {
         list($from, $to) = $dates;
 
-        return $query->whereDate(
-            $property,
-            '>=',
-            $from
-        )->whereDate(
-            $property,
-            '<=',
-            $to
-        );
+        $formattedFromDate = $this->parseDate($from);
+        $formattedToDate = $this->parseDate($to);
+
+        if (!$formattedFromDate && !$formattedToDate) {
+            return $query;
+        };
+
+        if ($formattedFromDate) {
+            $query = $query->whereDate($property, '>=', $from);
+        }
+
+        if ($formattedToDate) {
+            $query = $query->whereDate($property, '<=', $to);
+        }
+
+        return $query;
+    }
+
+    private function parseDate(string $date)
+    {
+        try {
+            return Carbon::createFromFormat('Y-m-d', $date);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

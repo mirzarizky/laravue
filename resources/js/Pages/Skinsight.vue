@@ -10,6 +10,7 @@ import {
     Quiz,
     PhotoUploadSection,
 } from "@/Components/Skinsight";
+import { Inertia } from "@inertiajs/inertia";
 
 export default defineComponent({
     provide() {
@@ -46,7 +47,7 @@ export default defineComponent({
                 { step: 6, component: "Quiz" },
                 { step: 7, component: "PhotoUploadSection" },
             ],
-            form: this.$inertia.form({
+            form: this.$inertia.form("skinsight-form", {
                 answers: [],
                 name: "",
                 birth_date: "",
@@ -74,6 +75,9 @@ export default defineComponent({
                 };
             }
         },
+        isFormFilled() {
+            return !!this.form.answers
+        }
     },
 
     mounted() {
@@ -83,6 +87,12 @@ export default defineComponent({
             onBefore: () => (this.isLoading = true),
             onSuccess: () => (this.isLoading = false),
         });
+
+        this.checkPreviousState();
+    },
+
+    beforeUnmount() {
+        Inertia.reset('skinsight-form')
     },
 
     methods: {
@@ -96,14 +106,32 @@ export default defineComponent({
             }
             this.nextStep();
         },
+        checkPreviousState() {
+            let skinsightForm = Inertia.restore("skinsight-form");
+            console.log(skinsightForm);
+
+            if (skinsightForm.answers) {
+                console.log("answers");
+                return;
+            }
+
+            if (skinsightForm.name) {
+                console.log("name");
+                return;
+            }
+        },
     },
 });
 </script>
 
 <template>
     <MainLayout title="SkinSight">
-        <div class="tw-h-full tw-min-h-screen tw-flex tw-items-center">
-            <div class="tw-w-full tw-max-w-xl tw-my-auto tw-mx-auto">
+        <div
+            class="tw-flex tw-justify-between tw-flex-col tw-h-full tw-space-y-44"
+        >
+            <div
+                class="tw-w-full tw-max-w-xl tw-mx-auto tw-flex tw-flex-col tw-justify-between"
+            >
                 <transition mode="out-in" name="fade" appear>
                     <component
                         @submit="onSubmit"

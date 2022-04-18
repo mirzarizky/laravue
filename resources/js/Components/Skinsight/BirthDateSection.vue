@@ -59,6 +59,7 @@ function formatDate(date) {
                     required
                     v-model="formData.birth_date"
                     scrollable
+                    :max="$date().toISOString()"
                 >
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="modal = false">

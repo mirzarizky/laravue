@@ -46,7 +46,7 @@ function onSkip() {
             chips
             hide-details
             accept="image/png, image/jpeg, image/bmp"
-            label="Klik untuk memilih foto (Maks. 5MB)"
+            placeholder="Klik untuk memilih foto (Maks. 5MB)"
             outlined
             v-model="photo"
             class="white"

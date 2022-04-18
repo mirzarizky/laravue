@@ -12,15 +12,15 @@ module.exports = {
         },
     },
     plugins: [
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [
-                "dist/*",
-                "!dist/.gitignore",
-                "!index.php",
-                "!robots.txt",
-                "!favicon.ico",
-            ],
-        }),
+        // new CleanWebpackPlugin({
+        //     cleanOnceBeforeBuildPatterns: [
+        //         "dist/*",
+        //         "!dist/.gitignore",
+        //         "!index.php",
+        //         "!robots.txt",
+        //         "!favicon.ico",
+        //     ],
+        // }),
         // new VuetifyLoaderPlugin(),
         new caseSensitivePathsPlugin(),
         ScriptSetup({}),

@@ -1,13 +1,17 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
-    prefix: "tw-",
+    // prefix: "tw-",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
+        "./vendor/filament/**/*.blade.php",
     ],
+
+    darkMode: "class",
 
     theme: {
         extend: {
@@ -16,6 +20,9 @@ module.exports = {
                 serif: ["Crimson Pro", ...defaultTheme.fontFamily.serif],
             },
             colors: {
+                danger: colors.rose,
+                success: colors.green,
+                warning: colors.yellow,
                 primary: {
                     DEFAULT: "#994629",
                     900: "#5c2a19",
@@ -34,6 +41,7 @@ module.exports = {
     },
 
     plugins: [
-        // require('@tailwindcss/forms')
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),
     ],
 };

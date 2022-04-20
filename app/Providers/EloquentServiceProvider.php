@@ -26,7 +26,7 @@ class EloquentServiceProvider extends ServiceProvider
     public function boot()
     {
         // Search query
-        Builder::macro('search', function ($fields = [], $string = null) {
+        Builder::macro('searchBy', function ($fields = [], $string = null) {
             if (!$string) {
                 return $this;
             }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -59,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use Notifiable;
     use HasRoles;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -104,8 +106,30 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmail());
     }
 
+    // Relationships
     public function surveys()
     {
         return $this->hasMany(Survey::class, 'user_id');
+    }
+
+    // Attributes
+    public function getAgeAttribute()
+    {
+        return $this->birth_date?->age;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only([
+            'name',
+            'email'
+        ]);
+
+        return $array;
     }
 }

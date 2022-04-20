@@ -14,6 +14,7 @@ require("vuetifyjs-mix-extension");
  */
 
 mix.js("resources/js/app.js", "public/dist/js")
+    .js("resources/js/alpine.js", "public/dist/js")
     .vuetify("vuetify-loader")
     .vue({ version: 2 })
     .postCss("resources/css/app.css", "public/dist/css", [

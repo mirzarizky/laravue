@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\FilamentServiceProvider;
+
 return [
 
     /*
@@ -182,6 +184,7 @@ return [
 
         App\Providers\EloquentServiceProvider::class,
         App\Providers\LaravelHealthServiceProvider::class,
+        FilamentServiceProvider::class,
 
     ],
 

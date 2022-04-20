@@ -33,11 +33,12 @@ class DummySurveyAnswerSeeder extends Seeder
                 'password'     => Hash::make('password'),
             ]);
         } else {
-            $user = User::factory()->create();
+            $user = User::factory()->create(['created_at' => today()->subDays(7)]);
         }
 
         $survey = Survey::create([
             'user_id' => $user->id,
+            // 'created_at' => today()->subDay(),
 
             'name' => $user->name,
             // 'phone_number',

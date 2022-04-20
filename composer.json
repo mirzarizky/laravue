@@ -6,13 +6,20 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "filament/filament": "^2.0",
+        "filament/spatie-laravel-media-library-plugin": "^2.0",
+        "filament/tables": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "http-interop/http-factory-guzzle": "^1.2",
         "inertiajs/inertia-laravel": "^0.5.4",
         "laravel/framework": "^9.0",
         "laravel/horizon": "^5.9",
         "laravel/sanctum": "^2.8",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
+        "livewire/livewire": "^2.10",
         "lorisleiva/laravel-actions": "^2.3",
+        "meilisearch/meilisearch-php": "^0.23.1",
         "predis/predis": "^1.1",
         "spatie/cpu-load-health-check": "^1.0",
         "spatie/data-transfer-object": "^3.7",
@@ -55,7 +62,8 @@
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
+            "@php artisan ide-helper:meta",
+            "@php artisan filament:upgrade"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

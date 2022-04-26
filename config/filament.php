@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Widgets\SkinTypeChart;
 use App\Filament\Widgets\StatsOverviewWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -140,12 +141,13 @@ return [
     */
 
     'widgets' => [
-        'namespace' => 'App\\Filament\\Widgets',
-        'path' => app_path('Filament/Widgets'),
+        // 'namespace' => 'App\\Filament\\Widgets',
+        // 'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
             // Widgets\FilamentInfoWidget::class,
-            StatsOverviewWidget::class,
+            // StatsOverviewWidget::class,
+            // SkinTypeChart::class,
         ],
     ],
 
@@ -196,15 +198,15 @@ return [
             'have_inline_labels' => false,
         ],
         'footer' => [
-            'should_show_logo' => true,
+            'should_show_logo' => false,
         ],
-        'max_content_width' => null,
+        'max_content_width' => 'full',
         'notifications' => [
-            'vertical_alignment' => 'top',
+            'vertical_alignment' => 'bottom',
             'alignment' => 'center',
         ],
         'sidebar' => [
-            'is_collapsible_on_desktop' => false,
+            'is_collapsible_on_desktop' => true,
         ],
         'tables' => [
             'actions' => [

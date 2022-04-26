@@ -2,62 +2,54 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
+use App\Models\NpsScore;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Livewire\Component;
 
-class UsersTable extends Component implements HasTable
+class NpsScoreTable extends Component implements HasTable
 {
     use InteractsWithTable;
 
     public function isTableSearchable(): bool
     {
-        return true;
+        return false;
     }
 
     protected function applySearchToTableQuery(Builder $query): Builder
     {
         if (filled($searchQuery = $this->getTableSearchQuery())) {
-            $query->whereIn('id', User::search($searchQuery)->keys());
+            $query->whereIn('id', NpsScore::search($searchQuery)->keys());
         }
 
         return $query;
     }
 
-    protected function getTableQuery()
+    protected function getTableQuery(): Builder
     {
-        return User::query()->select(['id', 'name', 'gender', 'birth_date', 'created_at']);
+        return NpsScore::query();
     }
 
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('name')->sortable()->searchable(),
-            TextColumn::make('gender'),
-            TextColumn::make('age')->default('-'),
-            TextColumn::make('created_at')->label('Registered At')->dateTime()->sortable(),
+            TextColumn::make('score')->sortable()->searchable(),
+            TextColumn::make('verbatim')->limit('255'),
+            TextColumn::make('created_at')->label('Submitted At')->dateTime()->sortable(),
         ];
     }
 
     protected function getTableFilters(): array
     {
         return [
-            SelectFilter::make('gender')
-                ->options([
-                    'male' => 'Male',
-                    'female' => 'Female',
-                ]),
             Filter::make('created_at')
                 ->form([
-                    DatePicker::make('created_from'),
-                    DatePicker::make('created_until'),
+                    DatePicker::make('created_from')->label('Submitted from'),
+                    DatePicker::make('created_until')->label('Submitted until'),
                 ])
                 ->query(function (Builder $query, array $data): Builder {
                     return $query
@@ -71,10 +63,5 @@ class UsersTable extends Component implements HasTable
                         );
                 })
         ];
-    }
-
-    public function render()
-    {
-        return view('livewire.users-table');
     }
 }

@@ -6,9 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "doctrine/dbal": "^3.3",
         "filament/filament": "^2.0",
+        "filament/forms": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "filament/tables": "^2.0",
+        "flowframe/laravel-trend": "^0.1.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "http-interop/http-factory-guzzle": "^1.2",
         "inertiajs/inertia-laravel": "^0.5.4",

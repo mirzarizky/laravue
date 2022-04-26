@@ -26,7 +26,6 @@ class FilamentServiceProvider extends ServiceProvider
     public function boot()
     {
         Filament::serving(function () {
-            // Filament::register(mix('/dist/js/alpine.js'));
             Filament::registerTheme(mix('/dist/css/app.css'));
         });
 

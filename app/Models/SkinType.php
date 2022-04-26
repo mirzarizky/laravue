@@ -35,6 +35,9 @@ class SkinType extends Model
 {
     use HasFactory;
 
+    public const CACHE_KEY_COUNT = 'count-skin-types';
+    public const CACHE_KEY_ALL = 'all-skin-types';
+
     protected $table = 'skin_types';
 
     protected $fillable = [
@@ -44,6 +47,11 @@ class SkinType extends Model
         'products_guideline'
     ];
 
+    // Relationships
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class, 'result', 'name');
+    }
 
     public function getImageAssetUrlAttribute()
     {
